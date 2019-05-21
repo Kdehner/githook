@@ -49,11 +49,11 @@ def main():
     hook.checkwebhook()
     try:
         plugin = plugins[request.headers.get('X-Gitlab-Event')]
-        data = plugin.run(request, color, authorHidden, branchHidden)
+        data = plugin.run(request, hook.color, hook.hideAuthor, hook.hideBranch)
         if data == "empty":
             return Response(status=204)
         else:
-            status = dispatch(data, webhook_url)
+            status = dispatch(data, hook.webhook)
             return Response(status=status)
     except KeyError:
         return Response(
