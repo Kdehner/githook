@@ -1,19 +1,10 @@
 from flask import Flask, request, Response
 from hook import Hook
 
-import requests
 from dispatch import dispatch
 import sys
 import importlib as imp
 import os
-
-
-def checkwebhook(url):
-    r = requests.get(url).text
-    # Check if webhook is even active
-    if all(keys in r for keys in ("name", "guild_id", "token")):
-        return True
-
 
 file_names = os.listdir(
     os.path.join(os.path.dirname(os.path.abspath(__file__)), 'plugins', '')
