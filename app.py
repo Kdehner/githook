@@ -101,13 +101,13 @@ if __name__ == '__main__':
         except: 
             # Run on default port
             start_app()
+    elif 'PORT' in os.environ:
     try:
-        config.PORT
-    # Check if the user (somehow) forgot to add a PORT key to the config.
-    # We'll still let them run if this is missing, it's not like it's gonna ruin everything. Unlike Karen. Please I just want my kids back
-    except AttributeError:
-        print("You are missing a 'PORT' key in your config. Defaulting to port 5000.")
-        config.PORT = 5000
+            # Try and run with ENV port
+            start_app(os.environ['PORT'])
+        except:
+            # Run on default port
+            start_app()
     else:
         # Same as above. We'll just set the default port ourselves cause we're a strong, independent application who don't need no user input
         # to find the port. *sassy fingersnap*
