@@ -95,19 +95,19 @@ def start_app(port='5000'):
 if __name__ == '__main__':
     # Check if a system argument of port was provided
     if '--port' in sys.argv:
-    try:
+        try:
             # Try and run with port argument
             start_app(sys.argv[2])
         except: 
             # Run on default port
             start_app()
     elif 'PORT' in os.environ:
-    try:
+        try:
             # Try and run with ENV port
             start_app(os.environ['PORT'])
         except:
             # Run on default port
             start_app()
-    else:
+    else: 
         # Run on default port
         start_app()
