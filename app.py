@@ -93,16 +93,14 @@ def start_app(port='5000'):
     app.run(host='0.0.0.0', port=port)
 
 if __name__ == '__main__':
-    # So. Many. Checks.
-
-    # Check that the user isn't being stupid and has copied over the config sample
+    # Check if a system argument of port was provided
+    if '--port' in sys.argv:
     try:
-        import config
-    except ImportError:
-        print(
-            "You have not setup your config correctly. Please rename configexample.py to config.py and fill out the values in the file."
-        )
-        sys.exit(1)
+            # Try and run with port argument
+            start_app(sys.argv[2])
+        except: 
+            # Run on default port
+            start_app()
     try:
         config.PORT
     # Check if the user (somehow) forgot to add a PORT key to the config.
