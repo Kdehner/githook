@@ -109,11 +109,5 @@ if __name__ == '__main__':
             # Run on default port
             start_app()
     else:
-        # Same as above. We'll just set the default port ourselves cause we're a strong, independent application who don't need no user input
-        # to find the port. *sassy fingersnap*
-        if config.PORT == "":
-            print(
-                "You are missing a 'PORT' value in your config. Defaulting to port 5000."
-            )
-            config.PORT = 5000
-    app.run(host='0.0.0.0', port=config.PORT)
+        # Run on default port
+        start_app()
