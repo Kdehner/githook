@@ -46,6 +46,7 @@ def new_request(request):
 @app.route('/', methods=['POST'])
 def main():
     hook = new_request(request)
+    hook.checkwebhook()
     try:
         plugin = plugins[request.headers.get('X-Gitlab-Event')]
         data = plugin.run(request, color, authorHidden, branchHidden)
