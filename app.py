@@ -45,42 +45,7 @@ def new_request(request):
     return new_hook
 @app.route('/', methods=['POST'])
 def main():
-    # If incoming request doesn't contain a '?webhook=' parameter
-    if 'webhook' in request.args:
-        webhook_url = request.args.get('webhook')
-        if checkwebhook(webhook_url) is not True:
-            return Response(
-                status=400,
-                response="Your webhook URL is incorrect. Are you sure you entered it correctly?",
-            )
-    else:
-        return Response(status=400, response="You're missing a webhook URL!")
-    # optional parameters
-    # hideAuthor
-    if 'hideAuthor' in request.args:
-        authorHidden = True
-    else:
-        authorHidden = False
-    # hideBranch
-    if 'hideBranch' in request.args:
-        branchHidden = True
-    else:
-        branchHidden = False
-    # color
-    # set default fallback color
-    color = 14423100
-    for args in request.args:
-        if any(spelling in args for spelling in ('color', 'colour')):
-            color = request.args.get(args)
-            if (len(color) == 3) or (len(color) == 6):
-                if len(color) == 3:
-                    color = ''.join([letter * 2 for letter in color])
-                try:
-                    color = int(color, 16)
-                except:
-                    color = 14423100
-            else:
-                color = 14423100
+    hook = new_request(request)
     try:
         plugin = plugins[request.headers.get('X-Gitlab-Event')]
         data = plugin.run(request, color, authorHidden, branchHidden)
