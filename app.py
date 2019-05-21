@@ -34,9 +34,15 @@ plugins = {}
 for plugin in list_of_plugins:
     plugins[plugin.EVENT] = plugin
 
-app = Flask(__name__)
+def new_request(request):
 
+    new_hook = Hook()
 
+    for arg in request.args:
+        if arg[0] in new_hook.params:
+            new_hook.params[arg[0]] = arg[1]
+
+    return new_hook
 @app.route('/', methods=['POST'])
 def main():
     # If incoming request doesn't contain a '?webhook=' parameter
