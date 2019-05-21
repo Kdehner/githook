@@ -43,10 +43,16 @@ def new_request(request):
             new_hook.params[arg[0]] = arg[1]
 
     return new_hook
+
+app = Flask(__name__)
+
 @app.route('/', methods=['POST'])
 def main():
+
     hook = new_request(request)
+
     hook.checkwebhook()
+
     try:
         plugin = plugins[request.headers.get('X-Gitlab-Event')]
         data = plugin.run(request, hook.color, hook.hideAuthor, hook.hideBranch)
